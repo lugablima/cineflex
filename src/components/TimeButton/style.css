@@ -1,0 +1,14 @@
+.time-button {
+  width: 83px;
+  height: 43px;
+  border-radius: 3px;
+  background: #e8833a;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 21px;
+  letter-spacing: 0.02em;
+  color: #ffffff;
+}
