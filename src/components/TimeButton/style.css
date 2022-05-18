@@ -11,4 +11,9 @@
   line-height: 21px;
   letter-spacing: 0.02em;
   color: #ffffff;
+  text-decoration: none;
+}
+
+a {
+  text-decoration: none;
 }
