@@ -1,4 +1,3 @@
-// import "./style.css";
 import styled from "styled-components";
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
@@ -15,6 +14,7 @@ export default function SeatsPage() {
   const { idSession } = useParams();
   const [session, setSession] = useState({});
   const [reservedSeats, setReservedSeats] = useState({ids: [], name: "", cpf: ""});
+  const [seatNames, setSeatNames] = useState([]);
 
   useEffect(() => {
     const promise = axios.get(`${API}/${idSession}/seats`);
@@ -23,16 +23,21 @@ export default function SeatsPage() {
     });
   }, []);
 
-  function bookSeat(idSeat) {
+  function bookSeat(idSeat, seatName) {
     setReservedSeats({ ...reservedSeats, ids: [ ...reservedSeats.ids, idSeat]});
+    setSeatNames([ ...seatNames, seatName]);
   }
 
-  function cancelSeat(idSeat) {
+  function cancelSeat(idSeat, seatName) {
     const newIds = reservedSeats.ids.filter((id) => id !== idSeat);
+    const newSeats = seatNames.filter(name => name !== seatName);
     setReservedSeats({ ...reservedSeats, ids: [ ...newIds]});
+    setSeatNames([ ...newSeats]);
   }
+
   if(reservedSeats.ids.length !== 0) {
     console.log(reservedSeats.ids);
+    console.log(seatNames);
   }
 
   return (
@@ -41,7 +46,7 @@ export default function SeatsPage() {
         <>
           <Subheader text={"Selecione o(s) assento(s)"} marginBottom={"21px"} />
           <Seats seats={session.seats} bookSeat={bookSeat} cancelSeat={cancelSeat} />
-          <Forms reservedSeats={reservedSeats} setReservedSeats={setReservedSeats} session={session} />
+          <Forms reservedSeats={reservedSeats} setReservedSeats={setReservedSeats} session={session} seatNames={seatNames} />
           <Footer title={session.movie.title} movieImg={session.movie.posterURL} weekday={session.day.weekday} timeMovie={session.name} />
         </>
       ) : (

@@ -1,4 +1,3 @@
-// import "./style.css";
 import styled from "styled-components";
 
 export default function Footer({ title, movieImg, weekday, timeMovie }) {

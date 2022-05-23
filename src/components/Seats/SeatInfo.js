@@ -12,7 +12,6 @@ export default function SeatInfo({ background, borderColor, text }) {
 const Container = styled.div`
   width: auto;
   height: auto;
-  /* height: 31.5px; */
   display: flex;
   flex-direction: column;
   justify-content: space-between;

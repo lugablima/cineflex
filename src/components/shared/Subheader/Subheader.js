@@ -1,4 +1,3 @@
-// import "./style.css";
 import styled from "styled-components";
 
 export default function Subheader({ text, marginBottom }) {
@@ -12,5 +11,4 @@ const Container = styled.h6`
   letter-spacing: 0.04em;
   color: #293845;
   margin-bottom: ${props => props.marginBottom ? props.marginBottom : "41px"};
-  /* margin-bottom: 41px; */
 `;

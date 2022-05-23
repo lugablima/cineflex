@@ -12,7 +12,6 @@ const Container = styled.button`
   border-radius: 3px;
   border: none;
   margin: ${props => props.margin};
-  /* margin: 48px auto 0; */
   padding: 0;
   background: #e8833a;
   display: flex;

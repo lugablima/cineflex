@@ -1,4 +1,3 @@
-// import "./style.css";
 import styled from "styled-components";
 import TimeButton from "../TimeButton/TimeButton";
 

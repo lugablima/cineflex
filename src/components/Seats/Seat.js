@@ -9,8 +9,6 @@ export default function Seat({ seat, bookSeat, cancelSeat }) {
     const notAvailableBorder = "#F7C52B";
     const selectedBorder = "#1AAE9E"; 
     const seatNumber = (Number(seat.name) < 10) ? seat.name.padStart(2, "0") : seat.name;   
-    // const seatBackground = (seat.isAvailable) ? "#C3CFD9" : "#FBE192";
-    // const seatBorder = (seat.isAvailable) ? "#808F9D" : "#F7C52B";
     const [background, setBackground] = useState(initializeBackground());
     const [border, setBorder] = useState(initializeBorder());
 
@@ -32,11 +30,11 @@ export default function Seat({ seat, bookSeat, cancelSeat }) {
       if(background === availableBack) {
         setBackground(selectedBack);
         setBorder(selectedBorder);
-        bookSeat(seat.id);
+        bookSeat(seat.id, seat.name);
       } else if(background === selectedBack){
         setBackground(availableBack);
         setBorder(availableBorder);
-        cancelSeat(seat.id);
+        cancelSeat(seat.id, seat.name);
       } else {
         alert("Esse assento não está disponível");
       }

@@ -1,21 +1,63 @@
 import styled from "styled-components";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 import Button from "../shared/Button/Button";
 
-export default function Forms({ reservedSeats, setReservedSeats, session }) {
+export default function Forms({ reservedSeats, setReservedSeats, session, seatNames }) {
   const API = "https://mock-api.driven.com.br/api/v5/cineflex/seats/book-many";
   const navigate = useNavigate();
+  const [key, setKey] = useState("");
+
+  function handleCPF(event) {
+    console.log(key);
+    console.log(event);
+    const cpf = event.target.value;
+    if((cpf.length === 3 || cpf.length === 7) && key !== "Backspace") {
+      setReservedSeats({ ...reservedSeats, cpf: (cpf + ".") });
+    } else if(cpf.length === 11 && key !== "Backspace") {
+      setReservedSeats({ ...reservedSeats, cpf: (cpf + "-") });
+    } else {
+      setReservedSeats({ ...reservedSeats, cpf: cpf });
+    }
+  }
+
+  function validateName(name) {
+    const regex = /^[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ\-']+$/;
+
+    const isValid = name.split(" ").every((value) => regex.test(value));
+
+    console.log(isValid);
+    return isValid;
+  }
+
+  function validateCPF(cpf) {
+    const regex = /^\d{3}\.\d{3}\.\d{3}\-\d{2}$/;
+    console.log(regex.test(cpf));
+    return regex.test(cpf);
+  }
 
   function submitForm(event) {
     event.preventDefault();
-
-    const promise= axios.post(`${API}`, reservedSeats);
-      promise
-        .then(() => {
-          navigate("/sucesso", { state: { reservedSeats: reservedSeats, session: session } });
-          console.log(reservedSeats);
-        })
+    
+    if(reservedSeats.ids.length !== 0) {
+      if(validateName(reservedSeats.name)) {
+        if(validateCPF(reservedSeats.cpf)) {
+          const promise= axios.post(`${API}`, reservedSeats);
+          promise
+            .then(() => {
+              navigate("/sucesso", { state: { reservedSeats: reservedSeats, session: session, seatNames: seatNames } });
+              console.log(reservedSeats, seatNames);
+            })
+        } else {
+          alert("CPF inválido, tente novamente!");
+        }  
+      } else {
+        alert("Nome inválido, tente novamente!");
+      }
+    } else {
+      alert("Escolha pelo menos um assento!");
+    }
   }
 
   return (
@@ -35,7 +77,8 @@ export default function Forms({ reservedSeats, setReservedSeats, session }) {
           placeholder="Digite seu CPF..."
           required
           value={reservedSeats.cpf}
-          onChange={(e) => setReservedSeats({ ...reservedSeats, cpf: e.target.value })}
+          onChange={handleCPF}
+          onKeyDown={(e) => setKey(e.key)}
         />
         <Button type="submit" text="Reservar assento(s)" margin={"48px auto 0"} />
       </form>

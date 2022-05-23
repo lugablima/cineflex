@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import Button from "../shared/Button/Button";
 
 function TicketInfo({ title, content }) {
@@ -15,15 +15,17 @@ function TicketInfo({ title, content }) {
 
 export default function SucessPage() {
   const { state } = useLocation();
-  const { reservedSeats, session } = state;
+  const { reservedSeats, session, seatNames } = state;
 
   return (
     <Container>
       <h6>Pedido feito com sucesso!</h6>
       <TicketInfo title="Filme e sessão" content={[session.movie.title, `${session.day.date} ${session.name}`]} />
-      <TicketInfo title="Ingressos" content={reservedSeats.ids.map(id => `Assento ${id.toString().slice(-2)}`)}/>
+      <TicketInfo title="Ingressos" content={seatNames.map((seat) => `Assento ${seat}`)} />
       <TicketInfo title="Comprador" content={[`Nome: ${reservedSeats.name}`, `CPF: ${reservedSeats.cpf}`]} />
-      <Button text="Voltar pra Home" margin={"20px 0 0"} />
+      <Link to="/">
+        <Button text="Voltar pra Home" margin={"20px 0 0"} />
+      </Link>
     </Container>
   );
 }
