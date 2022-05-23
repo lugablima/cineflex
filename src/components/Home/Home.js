@@ -3,7 +3,6 @@ import Subheader from "../shared/Subheader/Subheader";
 import Movies from "../Movies/Movies";
 
 export default function Home() {
-  console.log("Criei a Home");
   return (
     <Container>
       <Subheader text="Selecione o filme" />
