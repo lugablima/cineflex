@@ -13,7 +13,7 @@ export default function SeatsPage() {
   const API = "https://mock-api.driven.com.br/api/v5/cineflex/showtimes";
   const { idSession } = useParams();
   const [session, setSession] = useState({});
-  const [reservedSeats, setReservedSeats] = useState({ids: [], name: "", cpf: ""});
+  const [reservedSeats, setReservedSeats] = useState({ ids: [], name: "", cpf: "" });
   const [seatNames, setSeatNames] = useState([]);
 
   useEffect(() => {
@@ -24,20 +24,15 @@ export default function SeatsPage() {
   }, []);
 
   function bookSeat(idSeat, seatName) {
-    setReservedSeats({ ...reservedSeats, ids: [ ...reservedSeats.ids, idSeat]});
-    setSeatNames([ ...seatNames, seatName]);
+    setReservedSeats({ ...reservedSeats, ids: [...reservedSeats.ids, idSeat] });
+    setSeatNames([...seatNames, seatName]);
   }
 
   function cancelSeat(idSeat, seatName) {
     const newIds = reservedSeats.ids.filter((id) => id !== idSeat);
-    const newSeats = seatNames.filter(name => name !== seatName);
-    setReservedSeats({ ...reservedSeats, ids: [ ...newIds]});
-    setSeatNames([ ...newSeats]);
-  }
-
-  if(reservedSeats.ids.length !== 0) {
-    console.log(reservedSeats.ids);
-    console.log(seatNames);
+    const newSeats = seatNames.filter((name) => name !== seatName);
+    setReservedSeats({ ...reservedSeats, ids: [...newIds] });
+    setSeatNames([...newSeats]);
   }
 
   return (
@@ -46,8 +41,18 @@ export default function SeatsPage() {
         <>
           <Subheader text={"Selecione o(s) assento(s)"} marginBottom={"21px"} />
           <Seats seats={session.seats} bookSeat={bookSeat} cancelSeat={cancelSeat} />
-          <Forms reservedSeats={reservedSeats} setReservedSeats={setReservedSeats} session={session} seatNames={seatNames} />
-          <Footer title={session.movie.title} movieImg={session.movie.posterURL} weekday={session.day.weekday} timeMovie={session.name} />
+          <Forms
+            reservedSeats={reservedSeats}
+            setReservedSeats={setReservedSeats}
+            session={session}
+            seatNames={seatNames}
+          />
+          <Footer
+            title={session.movie.title}
+            movieImg={session.movie.posterURL}
+            weekday={session.day.weekday}
+            timeMovie={session.name}
+          />
         </>
       ) : (
         <ImageLoading src={loading} margin={"calc(50% - 50px) auto 0"} />

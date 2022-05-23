@@ -33,7 +33,7 @@ export default function SucessPage() {
 const Container = styled.div`
   width: 100%;
   height: auto;
-  margin-top: 94px;
+  margin: 94px 0 30px;
   padding: 0 28px 0;
   display: flex;
   flex-direction: column;

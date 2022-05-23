@@ -6,7 +6,9 @@ export default function Seats({ seats, bookSeat, cancelSeat }) {
   return (
     <Container>
       <SeatsContent>
-          {seats.map((seat, index) => <Seat key={index} seat={seat} bookSeat={bookSeat} cancelSeat={cancelSeat} />)}
+        {seats.map((seat, index) => (
+          <Seat key={index} seat={seat} bookSeat={bookSeat} cancelSeat={cancelSeat} />
+        ))}
       </SeatsContent>
       <SeatsInfo />
     </Container>

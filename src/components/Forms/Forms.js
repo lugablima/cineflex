@@ -10,13 +10,11 @@ export default function Forms({ reservedSeats, setReservedSeats, session, seatNa
   const [key, setKey] = useState("");
 
   function handleCPF(event) {
-    console.log(key);
-    console.log(event);
     const cpf = event.target.value;
-    if((cpf.length === 3 || cpf.length === 7) && key !== "Backspace") {
-      setReservedSeats({ ...reservedSeats, cpf: (cpf + ".") });
-    } else if(cpf.length === 11 && key !== "Backspace") {
-      setReservedSeats({ ...reservedSeats, cpf: (cpf + "-") });
+    if ((cpf.length === 3 || cpf.length === 7) && key !== "Backspace") {
+      setReservedSeats({ ...reservedSeats, cpf: cpf + "." });
+    } else if (cpf.length === 11 && key !== "Backspace") {
+      setReservedSeats({ ...reservedSeats, cpf: cpf + "-" });
     } else {
       setReservedSeats({ ...reservedSeats, cpf: cpf });
     }
@@ -24,34 +22,28 @@ export default function Forms({ reservedSeats, setReservedSeats, session, seatNa
 
   function validateName(name) {
     const regex = /^[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ\-']+$/;
-
     const isValid = name.split(" ").every((value) => regex.test(value));
-
-    console.log(isValid);
     return isValid;
   }
 
   function validateCPF(cpf) {
     const regex = /^\d{3}\.\d{3}\.\d{3}\-\d{2}$/;
-    console.log(regex.test(cpf));
     return regex.test(cpf);
   }
 
   function submitForm(event) {
     event.preventDefault();
-    
-    if(reservedSeats.ids.length !== 0) {
-      if(validateName(reservedSeats.name)) {
-        if(validateCPF(reservedSeats.cpf)) {
-          const promise= axios.post(`${API}`, reservedSeats);
-          promise
-            .then(() => {
-              navigate("/sucesso", { state: { reservedSeats: reservedSeats, session: session, seatNames: seatNames } });
-              console.log(reservedSeats, seatNames);
-            })
+
+    if (reservedSeats.ids.length !== 0) {
+      if (validateName(reservedSeats.name)) {
+        if (validateCPF(reservedSeats.cpf)) {
+          const promise = axios.post(`${API}`, reservedSeats);
+          promise.then(() => {
+            navigate("/sucesso", { state: { reservedSeats: reservedSeats, session: session, seatNames: seatNames } });
+          });
         } else {
           alert("CPF inválido, tente novamente!");
-        }  
+        }
       } else {
         alert("Nome inválido, tente novamente!");
       }
@@ -89,10 +81,8 @@ export default function Forms({ reservedSeats, setReservedSeats, session, seatNa
 const Container = styled.div`
   width: calc(100% - 48px);
   height: auto;
-  /* margin-bottom: 48px; */
 
   input {
-    /* width: 327px; */
     width: 100%;
     height: 51px;
     border-radius: 3px;
