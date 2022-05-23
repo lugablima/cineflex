@@ -22,7 +22,8 @@ export default function Forms({ reservedSeats, setReservedSeats, session, seatNa
 
   function validateName(name) {
     const regex = /^[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ\-']+$/;
-    const isValid = name.split(" ").every((value) => regex.test(value));
+    const newStr = name.trim();
+    const isValid = newStr.split(" ").every((value) => regex.test(value));
     return isValid;
   }
 
